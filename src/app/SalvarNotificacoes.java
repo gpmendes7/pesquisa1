@@ -31,9 +31,11 @@ public class SalvarNotificacoes {
 		List<Sivep> siveps = CSVSivep.carregarCSV(ARQUIVO_CSV_SIVEP);
 
 		em.getTransaction().begin();
+		
 		for (Sivep sivep : siveps) {
 			em.persist(gerarNotificacao(sivep));
 		}
+		
 		em.getTransaction().commit();
 		
 		em.close();

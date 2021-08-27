@@ -1,20 +1,22 @@
 package modelo;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 
 @Entity
-public class Notificacao {
+public class Paciente {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	private String numeroNotificacao;
 	private String nomeCompleto;
 	private String cpf;
 	private Date dataNotificacao;
@@ -65,13 +67,15 @@ public class Notificacao {
 	private Date dataEncerramento;
 	private String evolucaoCaso;
 	private String classificacaoFinal;
-	@ManyToOne
-	private Paciente paciente;
+	@OneToMany(mappedBy = "paciente", cascade = CascadeType.ALL)
+	private List<Notificacao> notificacoes;
 
-	public Notificacao() {
+	public Paciente() {
+		super();
+		notificacoes = new ArrayList<>();
 	}
 
-	public Notificacao(String numeroNotificacao, String nomeCompleto, String cpf, Date dataNotificacao,
+	public Paciente(String nomeCompleto, String cpf, Date dataNotificacao,
 			Date dataInicioSintomas, Date dataNascimento, String cep, String logradouro, String numero,
 			String complemento, String bairro, String municipio, String estado, String estrangeiro, String passaporte,
 			String paisOrigem, String profissionalSeguranca, String profissionalSaude, String cbo, String cns,
@@ -82,8 +86,7 @@ public class Notificacao {
 			String longitude, String cnes, String idade, String estadoTeste, Date dataTeste, String tipoTeste,
 			String resultadoTeste, Date dataInternacao, Date dataEncerramento, String evolucaoCaso,
 			String classificacaoFinal) {
-		super();
-		this.numeroNotificacao = numeroNotificacao;
+		this();
 		this.nomeCompleto = nomeCompleto;
 		this.cpf = cpf;
 		this.dataNotificacao = dataNotificacao;
@@ -136,217 +139,25 @@ public class Notificacao {
 		this.classificacaoFinal = classificacaoFinal;
 	}
 	
-	public String getNumeroNotificacao() {
-		return numeroNotificacao;
-	}
-
-	public String getNomeCompleto() {
-		return nomeCompleto;
+	public void adicionarNotificacao(Notificacao notificacao) {
+		notificacoes.add(notificacao);
 	}
 
 	public String getCpf() {
 		return cpf;
 	}
 
-	public Date getDataNotificacao() {
-		return dataNotificacao;
+	public String getNomeCompleto() {
+		return nomeCompleto;
 	}
-
-	public Date getDataInicioSintomas() {
-		return dataInicioSintomas;
-	}
-
+	
 	public Date getDataNascimento() {
 		return dataNascimento;
 	}
 
-	public String getCep() {
-		return cep;
-	}
-
-	public String getLogradouro() {
-		return logradouro;
-	}
-
-	public String getNumero() {
-		return numero;
-	}
-
-	public String getComplemento() {
-		return complemento;
-	}
-
-	public String getBairro() {
-		return bairro;
-	}
-
-	public String getMunicipio() {
-		return municipio;
-	}
-
-	public String getEstado() {
-		return estado;
-	}
-
-	public String getEstrangeiro() {
-		return estrangeiro;
-	}
-
-	public String getPassaporte() {
-		return passaporte;
-	}
-
-	public String getPaisOrigem() {
-		return paisOrigem;
-	}
-
-	public String getProfissionalSeguranca() {
-		return profissionalSeguranca;
-	}
-
-	public String getProfissionalSaude() {
-		return profissionalSaude;
-	}
-
-	public String getCbo() {
-		return cbo;
-	}
-
-	public String getCns() {
-		return cns;
-	}
-
-	public String getNomeMae() {
-		return nomeMae;
-	}
-
-	public String getSexo() {
-		return sexo;
-	}
-
-	public String getRacaCor() {
-		return racaCor;
-	}
-
-	public String getTelefoneCelular() {
-		return telefoneCelular;
-	}
-
-	public String getTelefoneContato() {
-		return telefoneContato;
-	}
-
-	public String getFebre() {
-		return febre;
-	}
-
-	public String getTosse() {
-		return tosse;
-	}
-
-	public String getDorGarganta() {
-		return dorGarganta;
-	}
-
-	public String getDispneia() {
-		return dispneia;
-	}
-
-	public String getOutrosSintomas() {
-		return outrosSintomas;
-	}
-
-	public String getDescricaoOutros() {
-		return descricaoOutros;
-	}
-
-	public String getDoencasRespiratorias() {
-		return doencasRespiratorias;
-	}
-
-	public String getDoencasRenais() {
-		return doencasRenais;
-	}
-
-	public String getFragilidadeImunologica() {
-		return fragilidadeImunologica;
-	}
-
-	public String getDiabetes() {
-		return diabetes;
-	}
-
-	public String getImunosupressao() {
-		return imunosupressao;
-	}
-
-	public String getDoencasCardiacas() {
-		return doencasCardiacas;
-	}
-
-	public String getGestanteAltoRisco() {
-		return gestanteAltoRisco;
-	}
-
-	public String getOrigem() {
-		return origem;
-	}
-
-	public String getLatitude() {
-		return latitude;
-	}
-
-	public String getLongitude() {
-		return longitude;
-	}
-
-	public String getCnes() {
-		return cnes;
-	}
-
-	public String getIdade() {
-		return idade;
-	}
-
-	public String getEstadoTeste() {
-		return estadoTeste;
-	}
-
-	public Date getDataTeste() {
-		return dataTeste;
-	}
-
-	public String getTipoTeste() {
-		return tipoTeste;
-	}
-
-	public String getResultadoTeste() {
-		return resultadoTeste;
-	}
-
-	public Date getDataInternacao() {
-		return dataInternacao;
-	}
-
-	public Date getDataEncerramento() {
-		return dataEncerramento;
-	}
-
-	public String getEvolucaoCaso() {
-		return evolucaoCaso;
-	}
-
-	public String getClassificacaoFinal() {
-		return classificacaoFinal;
-	}
-	
-	public void setPaciente(Paciente paciente) {
-		this.paciente = paciente;
-	}
-
 	@Override
 	public String toString() {
-		return "Notificacao [numeroNotificacao=" + numeroNotificacao + ", nomeCompleto=" + nomeCompleto + ", cpf=" + cpf
+		return "Paciente [nomeCompleto=" + nomeCompleto + ", cpf=" + cpf
 				+ ", dataNotificacao=" + dataNotificacao + ", dataInicioSintomas=" + dataInicioSintomas
 				+ ", dataNascimento=" + dataNascimento + ", cep=" + cep + ", logradouro=" + logradouro + ", numero="
 				+ numero + ", complemento=" + complemento + ", bairro=" + bairro + ", municipio=" + municipio
@@ -364,24 +175,6 @@ public class Notificacao {
 				+ ", dataTeste=" + dataTeste + ", tipoTeste=" + tipoTeste + ", resultadoTeste=" + resultadoTeste
 				+ ", dataInternacao=" + dataInternacao + ", dataEncerramento=" + dataEncerramento + ", evolucaoCaso="
 				+ evolucaoCaso + ", classificacaoFinal=" + classificacaoFinal + "]";
-	}
-
-	public boolean pertenceAoPaciente(Paciente paciente) {
-		boolean temMesmoNomeCompleto = this.nomeCompleto != null && !this.nomeCompleto.equals("")
-				&& this.nomeCompleto.equals(paciente.getNomeCompleto());
-		boolean temMesmaDataNascimento = this.dataNascimento != null
-				&& this.dataNascimento.equals(paciente.getDataNascimento());
-
-		return temMesmoNomeCompleto && temMesmaDataNascimento;
-	}
-
-	public boolean temNomeECPF() {
-		return this.nomeCompleto != null && !this.nomeCompleto.equals("") && this.cpf != null && !this.cpf.equals("");
-	}
-
-	public boolean temNomeInformadoComNumeros() {
-		String padrao = "\\d+";
-		return this.nomeCompleto != null && !this.nomeCompleto.equals("") && this.nomeCompleto.matches(padrao);
 	}
 
 }
