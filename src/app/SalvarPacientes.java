@@ -24,12 +24,13 @@ public class SalvarPacientes {
 		TypedQuery<Notificacao> query = em.createQuery(jpql, Notificacao.class);
 
 		List<Notificacao> notificacoes = query.getResultList();
-		System.out.println("Total de notificações: " + notificacoes.size());
+		List<Paciente> pacientes = new ArrayList<>();
 
 		Map<String, List<Notificacao>> mapaNotificacoesChaves = new HashMap<String, List<Notificacao>>();
 
 		for (Notificacao notificacao : notificacoes) {
 			String chave = notificacao.getNomeCompleto() + "," + notificacao.getDataNascimento();
+			
 			List<Notificacao> notificacoesChave = mapaNotificacoesChaves.get(chave);
 			if (notificacoesChave == null) {
 				notificacoesChave = new ArrayList<>();
@@ -41,13 +42,14 @@ public class SalvarPacientes {
 		}
 		
 		em.getTransaction().begin();
-
+		
+		long totalNotificacoesDescartadas = 0;
 		Set<String> chaves = mapaNotificacoesChaves.keySet();
 		for (String chave : chaves) {
 			List<Notificacao> notificacoesChave = mapaNotificacoesChaves.get(chave);
 
 			Notificacao notificacaoPaciente = notificacoesChave.remove(0);
-			if (notificacoesChave.size() > 1) {
+			if (notificacoesChave.size() > 0) {
 				for (Notificacao notificacaoChave : notificacoesChave) {
 					if (notificacaoChave.temNomeECPF() && !notificacaoChave.temNomeInformadoComNumeros()) {
 						notificacaoPaciente = notificacaoChave;
@@ -66,10 +68,17 @@ public class SalvarPacientes {
 				paciente.adicionarNotificacao(notificacao);
 				em.merge(notificacao);
 			}	
+			
+			pacientes.add(paciente);
+			totalNotificacoesDescartadas += notificacoesChave.size();
 		}
 		
 		em.getTransaction().commit();
-
+		
+		System.out.println("Total de notificações: " + notificacoes.size());
+		System.out.println("Total de notificações descartadas: " + totalNotificacoesDescartadas);
+		System.out.println("Total de pacientes: " + pacientes.size());
+		
 		em.close();
 		emf.close();
 	}

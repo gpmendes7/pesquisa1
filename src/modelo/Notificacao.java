@@ -343,6 +343,10 @@ public class Notificacao {
 	public void setPaciente(Paciente paciente) {
 		this.paciente = paciente;
 	}
+	
+	public void setNomeCompleto(String nomeCompleto) {
+		this.nomeCompleto = nomeCompleto;
+	}
 
 	@Override
 	public String toString() {
@@ -377,6 +381,14 @@ public class Notificacao {
 
 	public boolean temNomeECPF() {
 		return this.nomeCompleto != null && !this.nomeCompleto.equals("") && this.cpf != null && !this.cpf.equals("");
+	}
+	
+	public boolean temNome() {
+		return this.nomeCompleto != null && !this.nomeCompleto.equals("");
+	}
+	
+	public boolean temCPF() {
+		return this.cpf != null && !this.cpf.equals("");
 	}
 
 	public boolean temNomeInformadoComNumeros() {

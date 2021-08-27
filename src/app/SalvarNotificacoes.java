@@ -3,7 +3,6 @@ package app;
 import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -29,6 +28,7 @@ public class SalvarNotificacoes {
 		EntityManager em = emf.createEntityManager();
 
 		List<Sivep> siveps = CSVSivep.carregarCSV(ARQUIVO_CSV_SIVEP);
+		System.out.println("Total de registros carregados: " + siveps.size());
 
 		em.getTransaction().begin();
 		
