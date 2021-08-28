@@ -32,27 +32,27 @@ public class AjustarNotificacoesDuplicadasPorNomeEDataNascimento {
 		while(!notificacoesDuplicadas.isEmpty()) {
 			Notificacao notificacaoDuplicada = notificacoesDuplicadas.get(0);
 			
-			List<Notificacao> notificacaoDuplicadasComMesmoNomeCompletoEDataNascimento 
+			List<Notificacao> notificacoesDuplicadasComMesmoNomeCompletoEDataNascimento 
 			    = notificacoesDuplicadas.stream() 
 			                            .filter(n -> n.getNomeCompleto().equals(notificacaoDuplicada.getNomeCompleto()) 
 			                                 && n.getDataNascimento().equals(notificacaoDuplicada.getDataNascimento())) 
 			                            .collect(Collectors.toList());
 			
 			String cpfSelecionado = null;
-			for (Notificacao notificacao : notificacaoDuplicadasComMesmoNomeCompletoEDataNascimento) {
+			for (Notificacao notificacao : notificacoesDuplicadasComMesmoNomeCompletoEDataNascimento) {
 				if(notificacao.temCPF()) {
 					cpfSelecionado = notificacao.getCpf();
 				}
 			}
 			
-			for (Notificacao notificacao : notificacaoDuplicadasComMesmoNomeCompletoEDataNascimento) {
+			for (Notificacao notificacao : notificacoesDuplicadasComMesmoNomeCompletoEDataNascimento) {
 				if(!notificacao.temCPF()) {
 					notificacao.setCpf(cpfSelecionado);
 					em.merge(notificacao);
 				}
 			}
 
-			notificacoesDuplicadas.removeAll(notificacaoDuplicadasComMesmoNomeCompletoEDataNascimento);
+			notificacoesDuplicadas.removeAll(notificacoesDuplicadasComMesmoNomeCompletoEDataNascimento);
 		}
 
 	    em.getTransaction().commit();
