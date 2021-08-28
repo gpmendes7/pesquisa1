@@ -59,6 +59,7 @@ public class VerificarNotificacoesInconsistentesPorEvolucaoCasoDiferente {
 				  inconsistenciaEmDataNotificacao(notificacaoDuplicada, notificacao);				  
 				  inconsistenciaEmDataEncerramento(notificacaoDuplicada, notificacao);
 				  inconsistenciaEmDataInicioSintomas(notificacaoDuplicada, notificacao);
+				  inconsistenciaEmDataTeste(notificacaoDuplicada, notificacao);
 			  }
 		  }
 	}
@@ -99,6 +100,20 @@ public class VerificarNotificacoesInconsistentesPorEvolucaoCasoDiferente {
 		     && ((dataInicioSintomas1).before(dataInicioSintomas2))) {
 			  System.out.println("***************************");
 			  System.out.println("Notificações com evolução caso diferentes e com data de início sintomas incosistentes entre si");
+			  System.out.println(notificacaoDuplicada);
+			  System.out.println(notificacao);
+			  System.out.println("***************************");
+		  }
+	}
+	
+	private static void inconsistenciaEmDataTeste(Notificacao notificacaoDuplicada, Notificacao notificacao) {
+		  Date dataTeste1 = notificacaoDuplicada.getDataTeste();
+		  Date dataTeste2 = notificacao.getDataTeste();
+		  			  
+		  if(dataTeste1 != null && dataTeste2 != null
+		     && ((dataTeste1).before(dataTeste2))) {
+			  System.out.println("***************************");
+			  System.out.println("Notificações com evolução caso diferentes e com data de teste incosistentes entre si");
 			  System.out.println(notificacaoDuplicada);
 			  System.out.println(notificacao);
 			  System.out.println("***************************");
