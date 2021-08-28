@@ -29,7 +29,7 @@ public class SalvarPacientes {
 		Map<String, List<Notificacao>> mapaNotificacoesChaves = new HashMap<String, List<Notificacao>>();
 
 		for (Notificacao notificacao : notificacoes) {
-			String chave = notificacao.getNomeCompleto() + "," + notificacao.getDataNascimento();
+			String chave =  notificacao.getCpf() + "," + notificacao.getNomeCompleto() + "," + notificacao.getDataNascimento();
 			
 			List<Notificacao> notificacoesChave = mapaNotificacoesChaves.get(chave);
 			if (notificacoesChave == null) {
@@ -47,21 +47,14 @@ public class SalvarPacientes {
 		Set<String> chaves = mapaNotificacoesChaves.keySet();
 		for (String chave : chaves) {
 			List<Notificacao> notificacoesChave = mapaNotificacoesChaves.get(chave);
-
-			Notificacao notificacaoPaciente = notificacoesChave.remove(0);
-			if (notificacoesChave.size() > 0) {
-				for (Notificacao notificacaoChave : notificacoesChave) {
-					if (notificacaoChave.temNomeECPF() && !notificacaoChave.temNomeInformadoComNumeros()) {
-						notificacaoPaciente = notificacaoChave;
-					}
-				}
-			}
+			Notificacao notificacaoPaciente = notificacoesChave.remove(0); 
 			
 			Paciente paciente = gerarPacienteDeNotificacao(notificacaoPaciente);
 			em.persist(paciente);
 			
 			notificacaoPaciente.setPaciente(paciente);
 			paciente.adicionarNotificacao(notificacaoPaciente);
+			em.merge(notificacaoPaciente);
 			
 			for (Notificacao notificacao : notificacoesChave) {
 				notificacao.setPaciente(paciente);
