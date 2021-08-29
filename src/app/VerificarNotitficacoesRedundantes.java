@@ -67,7 +67,7 @@ public class VerificarNotitficacoesRedundantes {
 	}
 	
 	private static void redundanciaDataNotificacao(Notificacao notificacaoDuplicada, Notificacao notificacao) throws IOException {
-		Date dataNotificacao1 = notificacaoDuplicada.getDataNotificacao();
+		  Date dataNotificacao1 = notificacaoDuplicada.getDataNotificacao();
 		  Date dataNotificacao2 = notificacao.getDataNotificacao();
 		  
 		  if(dataNotificacao1 != null && dataNotificacao2 != null 
