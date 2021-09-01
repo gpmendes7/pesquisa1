@@ -65,6 +65,7 @@ public class Notificacao {
 	private Date dataEncerramento;
 	private String evolucaoCaso;
 	private String classificacaoFinal;
+	private boolean descartada;
 	@ManyToOne
 	private Paciente paciente;
 
@@ -340,6 +341,10 @@ public class Notificacao {
 		return classificacaoFinal;
 	}
 	
+	public boolean ehDescartada() {
+		return descartada;
+	}
+	
 	public void setPaciente(Paciente paciente) {
 		this.paciente = paciente;
 	}
@@ -350,6 +355,10 @@ public class Notificacao {
 	
 	public void setCpf(String cpf) {
 		this.cpf = cpf;
+	}
+	
+	public void setDescartada(boolean descartada) {
+		this.descartada = descartada;
 	}
 
 	@Override
@@ -398,6 +407,100 @@ public class Notificacao {
 	public boolean temNomeInformadoComNumeros() {
 		String padrao = "\\d+";
 		return this.nomeCompleto != null && !this.nomeCompleto.equals("") && this.nomeCompleto.matches(padrao);
+	}
+	
+	public boolean ehCopiaDe(Notificacao notificacao) {
+		return     temMesmoNomeCompleto(notificacao) 
+				//&& temMesmoCPF(notificacao)
+				&& temMesmaDataNotificacao(notificacao) 
+				&& temMesmaClassificacaoFinal(notificacao)
+				&& temMesmaEvolucaoCaso(notificacao) 
+				&& temMesmaDataInternacao(notificacao)
+				&& temMesmaDataEncerramento(notificacao);
+	}
+	
+	private boolean temMesmoCPF(Notificacao notificacao) {
+		  String cpf1 = this.getCpf();
+		  String cpf2 = notificacao.getCpf();
+		  
+		  if(cpf1 != null && cpf2 != null 
+		  && cpf1.equals(cpf2)) {
+			  return true;
+		  } 
+		  
+		  return false;
+	}
+	
+	private boolean temMesmoNomeCompleto(Notificacao notificacao) {
+		  String nomeCompleto1 = this.getNomeCompleto();
+		  String nomeCompleto2 = notificacao.getNomeCompleto();
+		  
+		  if(nomeCompleto1 != null && nomeCompleto2 != null 
+		  && nomeCompleto1.equals(nomeCompleto2)) {
+			  return true;
+		  } 
+		  
+		  return false;
+	}
+	
+	private boolean temMesmaDataNotificacao(Notificacao notificacao) {
+		  Date dataNotificacao1 = this.getDataNotificacao();
+		  Date dataNotificacao2 = notificacao.getDataNotificacao();
+		  
+		  if(dataNotificacao1 != null && dataNotificacao2 != null 
+		  && dataNotificacao1.equals(dataNotificacao2)) {
+			  return true;
+		  } 
+		  
+		  return false;
+	}
+	
+	private boolean temMesmaClassificacaoFinal(Notificacao notificacao) {
+		  String classificacaoFinal1 = this.getClassificacaoFinal();
+		  String classificacaoFinal2 = notificacao.getClassificacaoFinal();
+		  
+		  if(classificacaoFinal1 != null && classificacaoFinal2 != null 
+		  && classificacaoFinal1.equals(classificacaoFinal2)) {
+			  return true;
+		  } 
+		  
+		  return false;
+	}
+	
+	private boolean temMesmaEvolucaoCaso(Notificacao notificacao) {
+		  String evolucaoCaso1 = this.getEvolucaoCaso();
+		  String evolucaoCaso2 = notificacao.getEvolucaoCaso();
+		  
+		  if(evolucaoCaso1 != null && evolucaoCaso2 != null 
+		  && evolucaoCaso1.equals(evolucaoCaso2)) {
+			  return true;
+		  } 
+		  
+		  return false;
+	}
+
+	private boolean temMesmaDataEncerramento(Notificacao notificacao) {
+		  Date dataEncerramento1 = this.getDataEncerramento();
+		  Date dataEncerramento2 = notificacao.getDataEncerramento();
+		  
+		  if(dataEncerramento1 != null && dataEncerramento2 != null 
+		  && dataEncerramento1.equals(dataEncerramento2)) {
+			  return true;
+		  }
+		  
+		  return false;
+	}
+	
+	private boolean temMesmaDataInternacao(Notificacao notificacao) {
+		  Date dataInternacao1 = this.getDataInternacao();
+		  Date dataInternacao2 = notificacao.getDataInternacao();
+		  
+		  if(dataInternacao1 != null && dataInternacao2 != null 
+		  && dataInternacao1.equals(dataInternacao2)) {
+			  return true;
+		  }
+		  
+		  return false;
 	}
 
 }

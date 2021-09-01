@@ -1,7 +1,5 @@
-package app.copias;
+package app.persistencia;
 
-import java.io.FileWriter;
-import java.io.IOException;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -12,13 +10,9 @@ import javax.persistence.TypedQuery;
 
 import modelo.Notificacao;
 
-public class IdentificarNotificaoesCopias {
+public class ClassificarNotificacoes {
 	
-	private static FileWriter fileWriter;
-	
-	public static void main(String[] args) throws IOException {
-		fileWriter = new FileWriter("./resultados/copias/copias.txt");
-		
+	public static void main(String[] args) {
 		EntityManagerFactory emf = Persistence.createEntityManagerFactory("sivep");
 		EntityManager em = emf.createEntityManager();
 		
@@ -27,6 +21,8 @@ public class IdentificarNotificaoesCopias {
 		TypedQuery<Notificacao> query = em.createQuery(jpql, Notificacao.class);
 		
 		List<Notificacao> notificacoes = query.getResultList();
+		
+		em.getTransaction().begin();
 		
 		int totalDeNotificacoesComCopias = 0;
 		int totalCopias = 0;
@@ -41,11 +37,8 @@ public class IdentificarNotificaoesCopias {
 				  totalDeNotificacoesComCopias++;
 				  
 				  for (Notificacao notificacaoCopia : notificacoesCopia) {
-					  fileWriter.write("***************************\n");
-					  fileWriter.write("Notificações com o mesmo nome completo, data de notificação, classificação final, evolução caso, data de internação e data de encerramento\n");
-					  fileWriter.write(notificacao + "\n");
-					  fileWriter.write(notificacaoCopia + "\n");
-					  fileWriter.write("***************************\n");
+					  notificacaoCopia.setDescartada(true);
+					  em.merge(notificacaoCopia);
 				  }
 				  
 				  totalCopias += notificacoesCopia.size();
@@ -55,11 +48,12 @@ public class IdentificarNotificaoesCopias {
 		
 		System.out.println("Total de notificações com cópias: " + totalDeNotificacoesComCopias);
 		System.out.println("Total de cópias identificadas: " + totalCopias);
+		
+		em.getTransaction().commit();
 		 
 		em.close();
 		emf.close();
-		
-		fileWriter.close();
 	}
+
 
 }

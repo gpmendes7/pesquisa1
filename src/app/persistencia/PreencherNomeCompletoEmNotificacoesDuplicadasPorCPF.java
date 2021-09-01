@@ -9,7 +9,7 @@ import javax.persistence.Persistence;
 
 import modelo.Notificacao;
 
-public class AjustarNotificacoesDuplicadasPorNomeEDataNascimento {
+public class PreencherNomeCompletoEmNotificacoesDuplicadasPorCPF {
 
 	public static void main(String[] args) {
 		EntityManagerFactory emf = Persistence.createEntityManagerFactory("sivep");
@@ -17,12 +17,12 @@ public class AjustarNotificacoesDuplicadasPorNomeEDataNascimento {
 		
 		String jpql = "select n1"
 		            + " from Notificacao n1"
-		            + " where n1.nomeCompleto != ''" 
+		            + " where n1.cpf != ''" 
 		            + " and n1.dataNascimento is not null" 
 		            + " and exists ("
 		            + " select n2"
 					+ " from Notificacao n2"
-					+ " where n2.nomeCompleto = n1.nomeCompleto"
+					+ " where n2.cpf = n1.cpf"
 					+ " and n2.dataNascimento = n1.dataNascimento"
 					+ " and n2.numeroNotificacao != n1.numeroNotificacao )";
 		List<Notificacao> notificacoesDuplicadas = em.createQuery(jpql, Notificacao.class).getResultList();
@@ -32,27 +32,27 @@ public class AjustarNotificacoesDuplicadasPorNomeEDataNascimento {
 		while(!notificacoesDuplicadas.isEmpty()) {
 			Notificacao notificacaoDuplicada = notificacoesDuplicadas.get(0);
 			
-			List<Notificacao> notificacoesDuplicadasComMesmoNomeCompletoEDataNascimento 
-			    = notificacoesDuplicadas.stream() 
-			                            .filter(n -> n.getNomeCompleto().equals(notificacaoDuplicada.getNomeCompleto()) 
-			                                 && n.getDataNascimento().equals(notificacaoDuplicada.getDataNascimento())) 
+			List<Notificacao> notificacoesDuplicadasComMesmoCPFEDataNascimento 
+				= notificacoesDuplicadas.stream() 
+			                            .filter(n -> n.getCpf().equals(notificacaoDuplicada.getCpf())
+			                            	 && n.getDataNascimento().equals(notificacaoDuplicada.getDataNascimento()))
 			                            .collect(Collectors.toList());
 			
-			String cpfSelecionado = null;
-			for (Notificacao notificacao : notificacoesDuplicadasComMesmoNomeCompletoEDataNascimento) {
-				if(notificacao.temCPF()) {
-					cpfSelecionado = notificacao.getCpf();
+			String nomeSelecionado = null;
+			for (Notificacao notificacao : notificacoesDuplicadasComMesmoCPFEDataNascimento) {
+				if(notificacao.temNome() && !notificacao.temNomeInformadoComNumeros()) {
+					nomeSelecionado = notificacao.getNomeCompleto();
 				}
 			}
 			
-			for (Notificacao notificacao : notificacoesDuplicadasComMesmoNomeCompletoEDataNascimento) {
-				if(!notificacao.temCPF()) {
-					notificacao.setCpf(cpfSelecionado);
+			for (Notificacao notificacao : notificacoesDuplicadasComMesmoCPFEDataNascimento) {
+				if(!notificacao.temNome() || notificacao.temNomeInformadoComNumeros()) {
+					notificacao.setNomeCompleto(nomeSelecionado);
 					em.merge(notificacao);
 				}
 			}
 
-			notificacoesDuplicadas.removeAll(notificacoesDuplicadasComMesmoNomeCompletoEDataNascimento);
+			notificacoesDuplicadas.removeAll(notificacoesDuplicadasComMesmoCPFEDataNascimento);
 		}
 
 	    em.getTransaction().commit();
