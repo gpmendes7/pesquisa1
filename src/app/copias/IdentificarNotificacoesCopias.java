@@ -16,7 +16,7 @@ import com.opencsv.exceptions.CsvRequiredFieldEmptyException;
 
 import csv.CSVNotificacao;
 import modelo.Notificacao;
-import modelo.NotificacaoCSV;
+import modelo.NotificacaoParaCSV;
 
 public class IdentificarNotificacoesCopias {
 
@@ -38,7 +38,7 @@ public class IdentificarNotificacoesCopias {
 
 		List<Notificacao> notificacoes = query.getResultList();
 
-		List<NotificacaoCSV> notificacoesCSV = new ArrayList<NotificacaoCSV>();
+		List<NotificacaoParaCSV> notificacoesCSV = new ArrayList<NotificacaoParaCSV>();
 
 		int totalDeNotificacoesComCopias = 0;
 		int totalCopias = 0;
@@ -74,7 +74,7 @@ public class IdentificarNotificacoesCopias {
 		System.out.println("Total de cópias identificadas: " + totalCopias);
 
 		notificacoesCSV.add(0,
-				new NotificacaoCSV("numeroNotificacao", "nomeCompleto", "cpf", "dataNotificacao",
+				new NotificacaoParaCSV("numeroNotificacao", "nomeCompleto", "cpf", "dataNotificacao",
 						"dataInicioSintomas", "dataNascimento", "cep", "logradouro", "numero", "complemento", "bairro",
 						"municipio", "estado", "estrangeiro", "passaporte", "paisOrigem", "profissionalSeguranca",
 						"profissionalSaude", "cbo", "cns", "nomeMae", "sexo", "racaCor", "telefoneCelular",
@@ -96,7 +96,7 @@ public class IdentificarNotificacoesCopias {
 		return string != null && !string.equals("");
 	}
 
-	public static NotificacaoCSV gerarNotificacaoParaCSV(Notificacao notificacao) {
+	public static NotificacaoParaCSV gerarNotificacaoParaCSV(Notificacao notificacao) {
 		String dataNotificacao = notificacao.getDataNotificacao() != null ? notificacao.getDataNotificacao().toString()
 				: null;
 		String dataInicioSintomas = notificacao.getDataInicioSintomas() != null
@@ -111,7 +111,7 @@ public class IdentificarNotificacoesCopias {
 				? notificacao.getDataEncerramento().toString()
 				: null;
 
-		return new NotificacaoCSV(notificacao.getNumeroNotificacao(), notificacao.getNomeCompleto(),
+		return new NotificacaoParaCSV(notificacao.getNumeroNotificacao(), notificacao.getNomeCompleto(),
 				notificacao.getCpf(), dataNotificacao, dataInicioSintomas, dataNascimento, notificacao.getCep(),
 				notificacao.getLogradouro(), notificacao.getNumero(), notificacao.getComplemento(),
 				notificacao.getBairro(), notificacao.getMunicipio(), notificacao.getEstado(),

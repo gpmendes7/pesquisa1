@@ -17,15 +17,15 @@ import com.opencsv.bean.StatefulBeanToCsvBuilder;
 import com.opencsv.exceptions.CsvDataTypeMismatchException;
 import com.opencsv.exceptions.CsvRequiredFieldEmptyException;
 
-import modelo.NotificacaoCSV;
+import modelo.NotificacaoParaCSV;
 
 public class CSVNotificacao {
 	
-	private static ColumnPositionMappingStrategy<NotificacaoCSV> strategy;
+	private static ColumnPositionMappingStrategy<NotificacaoParaCSV> strategy;
 	
 	static {
-		strategy = new ColumnPositionMappingStrategy<NotificacaoCSV>();
-		strategy.setType(NotificacaoCSV.class);
+		strategy = new ColumnPositionMappingStrategy<NotificacaoParaCSV>();
+		strategy.setType(NotificacaoParaCSV.class);
 		
 		String[] colunas = { "numeroNotificacao", "nomeCompleto", "cpf", "dataNotificacao", "dataInicioSintomas",
 				"dataNascimento", "cep", "logradouro", "numero", "complemento", "bairro", "municipio", "estado",
@@ -39,22 +39,22 @@ public class CSVNotificacao {
 		strategy.setColumnMapping(colunas);
 	}
 
-	public static List<NotificacaoCSV> carregarCSV(String nomeArquivo) throws IOException {
+	public static List<NotificacaoParaCSV> carregarCSV(String nomeArquivo) throws IOException {
 		try (Reader reader = Files.newBufferedReader(Paths.get(nomeArquivo));) {
-			CsvToBean<NotificacaoCSV> csvToBean = new CsvToBeanBuilder<NotificacaoCSV>(reader)
+			CsvToBean<NotificacaoParaCSV> csvToBean = new CsvToBeanBuilder<NotificacaoParaCSV>(reader)
 					.withMappingStrategy(strategy)
-					.withType(NotificacaoCSV.class)
+					.withType(NotificacaoParaCSV.class)
 					.withSeparator(';')
 					.withSkipLines(1)
 					.build();
-			List<NotificacaoCSV> notificacoes = csvToBean.parse();
+			List<NotificacaoParaCSV> notificacoes = csvToBean.parse();
 			return notificacoes;
 		}
 	}
 
-	public static void criarCSV(String nomeArquivo, List<NotificacaoCSV> notificacoes) throws IOException, CsvDataTypeMismatchException, CsvRequiredFieldEmptyException {
+	public static void criarCSV(String nomeArquivo, List<NotificacaoParaCSV> notificacoes) throws IOException, CsvDataTypeMismatchException, CsvRequiredFieldEmptyException {
 		try (Writer writer = Files.newBufferedWriter(Paths.get(nomeArquivo));) {
-			StatefulBeanToCsv<NotificacaoCSV> beanToCsv = new StatefulBeanToCsvBuilder<NotificacaoCSV>(writer)
+			StatefulBeanToCsv<NotificacaoParaCSV> beanToCsv = new StatefulBeanToCsvBuilder<NotificacaoParaCSV>(writer)
 					.withMappingStrategy(strategy)
 					.withSeparator(';')
 					.withQuotechar(CSVWriter.NO_QUOTE_CHARACTER)
