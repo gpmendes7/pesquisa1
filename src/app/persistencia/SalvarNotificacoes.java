@@ -71,6 +71,6 @@ public class SalvarNotificacoes {
 				sivep.getDoencasCardiacas(), sivep.getGestanteAltoRisco(), sivep.getOrigem(), sivep.getLatitude(),
 				sivep.getLongitude(), sivep.getCnes(), sivep.getIdade(), sivep.getEstadoTeste(), dataTeste,
 				sivep.getTipoTeste(), sivep.getResultadoTeste(), dataInternacao, dataEncerramento,
-				sivep.getEvolucaoCaso(), sivep.getClassificacaoFinal());
+				sivep.getEvolucaoCaso(), sivep.getClassificacaoFinal(), false);
 	}
 }

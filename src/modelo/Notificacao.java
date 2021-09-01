@@ -82,7 +82,7 @@ public class Notificacao {
 			String imunosupressao, String doencasCardiacas, String gestanteAltoRisco, String origem, String latitude,
 			String longitude, String cnes, String idade, String estadoTeste, Date dataTeste, String tipoTeste,
 			String resultadoTeste, Date dataInternacao, Date dataEncerramento, String evolucaoCaso,
-			String classificacaoFinal) {
+			String classificacaoFinal, boolean descartada) {
 		super();
 		this.numeroNotificacao = numeroNotificacao;
 		this.nomeCompleto = nomeCompleto;
@@ -135,8 +135,11 @@ public class Notificacao {
 		this.dataEncerramento = dataEncerramento;
 		this.evolucaoCaso = evolucaoCaso;
 		this.classificacaoFinal = classificacaoFinal;
+		this.descartada = descartada;
 	}
-	
+
+
+
 	public String getNumeroNotificacao() {
 		return numeroNotificacao;
 	}
