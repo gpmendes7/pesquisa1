@@ -14,16 +14,16 @@ import javax.persistence.TypedQuery;
 import com.opencsv.exceptions.CsvDataTypeMismatchException;
 import com.opencsv.exceptions.CsvRequiredFieldEmptyException;
 
-import csv.CSVNotificacaoCopia;
+import csv.CSVNotificacao;
 import modelo.Notificacao;
-import modelo.NotificacaoCopia;
+import modelo.NotificacaoCSV;
 
-public class IdentificarNotificaoesCopias {
+public class IdentificarNotificacoesCopias {
 
 	private static FileWriter fileWriter;
 
-	private static final String ARQUIVO_TEXTO_COPIAS = "./resultados/copias/copias.txt";
-	private static final String ARQUIVO_CSV_COPIAS = "./csv/copias/copias.csv";
+	private static final String ARQUIVO_TEXTO_COPIAS = "./arquivos/txt/copias/copias.txt";
+	private static final String ARQUIVO_CSV_COPIAS = "./arquivos/csv/copias/copias.csv";
 
 	public static void main(String[] args)
 			throws IOException, CsvDataTypeMismatchException, CsvRequiredFieldEmptyException {
@@ -38,7 +38,7 @@ public class IdentificarNotificaoesCopias {
 
 		List<Notificacao> notificacoes = query.getResultList();
 
-		List<NotificacaoCopia> notificacoesParaCSV = new ArrayList<NotificacaoCopia>();
+		List<NotificacaoCSV> notificacoesCSV = new ArrayList<NotificacaoCSV>();
 
 		int totalDeNotificacoesComCopias = 0;
 		int totalCopias = 0;
@@ -58,9 +58,11 @@ public class IdentificarNotificaoesCopias {
 					fileWriter.write(notificacao + "\n");
 					fileWriter.write(notificacaoCopia + "\n");
 					fileWriter.write("***************************\n");
+					
+					notificacaoCopia.setDescartada(true);
 
-					notificacoesParaCSV.add(gerarNotificacaoParaCSV(notificacao));
-					notificacoesParaCSV.add(gerarNotificacaoParaCSV(notificacaoCopia));
+					notificacoesCSV.add(gerarNotificacaoParaCSV(notificacao));
+					notificacoesCSV.add(gerarNotificacaoParaCSV(notificacaoCopia));
 				}
 
 				totalCopias += notificacoesCopia.size();
@@ -71,8 +73,8 @@ public class IdentificarNotificaoesCopias {
 		System.out.println("Total de notificações com cópias: " + totalDeNotificacoesComCopias);
 		System.out.println("Total de cópias identificadas: " + totalCopias);
 
-		notificacoesParaCSV.add(0,
-				new NotificacaoCopia("numeroNotificacao", "nomeCompleto", "cpf", "dataNotificacao",
+		notificacoesCSV.add(0,
+				new NotificacaoCSV("numeroNotificacao", "nomeCompleto", "cpf", "dataNotificacao",
 						"dataInicioSintomas", "dataNascimento", "cep", "logradouro", "numero", "complemento", "bairro",
 						"municipio", "estado", "estrangeiro", "passaporte", "paisOrigem", "profissionalSeguranca",
 						"profissionalSaude", "cbo", "cns", "nomeMae", "sexo", "racaCor", "telefoneCelular",
@@ -82,7 +84,7 @@ public class IdentificarNotificaoesCopias {
 						"longitude", "cnes", "idade", "estadoTeste", "dataTeste", "tipoTeste", "resultadoTeste",
 						"dataInternacao", "dataEncerramento", "evolucaoCaso", "classificacaoFinal", "descartada"));
 
-		CSVNotificacaoCopia.criarCSV(ARQUIVO_CSV_COPIAS, notificacoesParaCSV);
+		CSVNotificacao.criarCSV(ARQUIVO_CSV_COPIAS, notificacoesCSV);
 
 		em.close();
 		emf.close();
@@ -94,7 +96,7 @@ public class IdentificarNotificaoesCopias {
 		return string != null && !string.equals("");
 	}
 
-	public static NotificacaoCopia gerarNotificacaoParaCSV(Notificacao notificacao) {
+	public static NotificacaoCSV gerarNotificacaoParaCSV(Notificacao notificacao) {
 		String dataNotificacao = notificacao.getDataNotificacao() != null ? notificacao.getDataNotificacao().toString()
 				: null;
 		String dataInicioSintomas = notificacao.getDataInicioSintomas() != null
@@ -109,7 +111,7 @@ public class IdentificarNotificaoesCopias {
 				? notificacao.getDataEncerramento().toString()
 				: null;
 
-		return new NotificacaoCopia(notificacao.getNumeroNotificacao(), notificacao.getNomeCompleto(),
+		return new NotificacaoCSV(notificacao.getNumeroNotificacao(), notificacao.getNomeCompleto(),
 				notificacao.getCpf(), dataNotificacao, dataInicioSintomas, dataNascimento, notificacao.getCep(),
 				notificacao.getLogradouro(), notificacao.getNumero(), notificacao.getComplemento(),
 				notificacao.getBairro(), notificacao.getMunicipio(), notificacao.getEstado(),

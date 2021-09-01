@@ -19,7 +19,7 @@ import modelo.Sivep;
 
 public class SalvarNotificacoes {
 
-	private static final String ARQUIVO_CSV_SIVEP = "./csv/sivep.csv";
+	private static final String ARQUIVO_CSV_SIVEP = ".arquivos/csv/sivep.csv";
 
 	public static void main(String[] args)
 			throws IOException, CsvDataTypeMismatchException, CsvRequiredFieldEmptyException, ParseException {
