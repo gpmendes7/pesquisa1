@@ -154,6 +154,18 @@ public class Paciente {
 	public Date getDataNascimento() {
 		return dataNascimento;
 	}
+	
+	public List<Notificacao> getNotificacoes() {
+		return notificacoes;
+	}
+	
+	public void setEvolucaoCaso(String evolucaoCaso) {
+		this.evolucaoCaso = evolucaoCaso;
+	}
+	
+	public void setResultadoTeste(String resultadoTeste) {
+		this.resultadoTeste = resultadoTeste;
+	}
 
 	@Override
 	public String toString() {

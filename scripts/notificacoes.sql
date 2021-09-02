@@ -83,3 +83,19 @@ and n2.numeroNotificacao != n1.numeroNotificacao
 select n.dataNotificacao
 from notificacao n
 order by n.dataNotificacao;
+
+-- agrupar quantidade de notificações por pacientes
+select n.paciente_id, count(n.numeroNotificacao) 
+from notificacao n
+where n.paciente_id is not null
+group by n.paciente_id;
+
+-- quantidade de notificações de paciente com id 80000
+select count(n.numeroNotificacao) 
+from notificacao n
+where n.paciente_id = 80000;
+
+-- id de paciente 12223 com 3 notificações
+select count(n.numeroNotificacao) 
+from notificacao n
+where n.paciente_id = 12223;

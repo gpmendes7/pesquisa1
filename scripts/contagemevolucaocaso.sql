@@ -16,6 +16,7 @@ group by n.evolucaoCaso;
 select evolucaoCaso, count(n.numeroNotificacao) as qtd
 from notificacao n
 where month(n.dataNotificacao) = 1
+and not descartada
 group by n.evolucaoCaso;
 
 -- contagem de registros por evolução caso janeiro 2020
