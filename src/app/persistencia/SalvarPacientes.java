@@ -20,12 +20,11 @@ public class SalvarPacientes {
 		EntityManagerFactory emf = Persistence.createEntityManagerFactory("sivep");
 		EntityManager em = emf.createEntityManager();
 
-		String jpql = "select n from Notificacao n";
+		String jpql = "select n from Notificacao n where descartada = 0";
 		TypedQuery<Notificacao> query = em.createQuery(jpql, Notificacao.class);
 
 		List<Notificacao> notificacoes = query.getResultList();
 		List<Paciente> pacientes = new ArrayList<>();
-
 		Map<String, List<Notificacao>> mapaNotificacoesChaves = new HashMap<String, List<Notificacao>>();
 
 		for (Notificacao notificacao : notificacoes) {
@@ -43,7 +42,7 @@ public class SalvarPacientes {
 		
 		em.getTransaction().begin();
 		
-		long totalNotificacoesDescartadas = 0;
+		long totalNotificacoesNaoUsadas = 0;
 		Set<String> chaves = mapaNotificacoesChaves.keySet();
 		for (String chave : chaves) {
 			List<Notificacao> notificacoesChave = mapaNotificacoesChaves.get(chave);
@@ -63,14 +62,14 @@ public class SalvarPacientes {
 			}	
 			
 			pacientes.add(paciente);
-			totalNotificacoesDescartadas += notificacoesChave.size();
+			totalNotificacoesNaoUsadas += notificacoesChave.size();
 		}
 		
 		em.getTransaction().commit();
 		
-		System.out.println("Total de notificações: " + notificacoes.size());
-		System.out.println("Total de notificações descartadas: " + totalNotificacoesDescartadas);
-		System.out.println("Total de pacientes: " + pacientes.size());
+		System.out.println("Total de notificações sem cópias: " + notificacoes.size());
+		System.out.println("Total de notificações usadas para gerar pacientes: " + pacientes.size());
+		System.out.println("Total de notificações não usadas para gerar pacientes: " + totalNotificacoesNaoUsadas);
 		
 		em.close();
 		emf.close();
