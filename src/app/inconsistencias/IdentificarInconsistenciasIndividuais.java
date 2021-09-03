@@ -12,7 +12,7 @@ import javax.persistence.TypedQuery;
 
 import modelo.Notificacao;
 
-public class IdentificarNotificacoesInconsistetesPorDatas {
+public class IdentificarInconsistenciasIndividuais {
 	
 	private static FileWriter fileWriter1;
 	private static FileWriter fileWriter2;

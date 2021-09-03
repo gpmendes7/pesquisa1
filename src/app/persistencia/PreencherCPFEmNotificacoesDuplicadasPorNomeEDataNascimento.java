@@ -15,15 +15,15 @@ public class PreencherCPFEmNotificacoesDuplicadasPorNomeEDataNascimento {
 		EntityManagerFactory emf = Persistence.createEntityManagerFactory("sivep");
 		EntityManager em = emf.createEntityManager();
 		
-		String jpql = "select n1"
-		            + " from Notificacao n1"
-		            + " where n1.nomeCompleto != ''" 
-		            + " and n1.dataNascimento is not null" 
-		            + " and exists ("
-		            + " select n2"
-					+ " from Notificacao n2"
-					+ " where n2.nomeCompleto = n1.nomeCompleto"
-					+ " and n2.dataNascimento = n1.dataNascimento"
+		String jpql = "select n1\n"
+		            + " from Notificacao n1\n"
+		            + " where n1.nomeCompleto != ''\n" 
+		            + " and n1.dataNascimento is not null\n" 
+		            + " and exists (\n"
+		            + " select n2\n"
+					+ " from Notificacao n2\n"
+					+ " where n2.nomeCompleto = n1.nomeCompleto\n"
+					+ " and n2.dataNascimento = n1.dataNascimento\n"
 					+ " and n2.numeroNotificacao != n1.numeroNotificacao )";
 		List<Notificacao> notificacoesDuplicadas = em.createQuery(jpql, Notificacao.class).getResultList();
 		

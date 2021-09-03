@@ -344,6 +344,10 @@ public class Notificacao {
 		return classificacaoFinal;
 	}
 	
+	public Paciente getPaciente() {
+		return paciente;
+	}
+	
 	public boolean ehDescartada() {
 		return descartada;
 	}
@@ -414,24 +418,11 @@ public class Notificacao {
 	
 	public boolean ehCopiaDe(Notificacao notificacao) {
 		return     temMesmoNomeCompleto(notificacao) 
-				//&& temMesmoCPF(notificacao)
 				&& temMesmaDataNotificacao(notificacao) 
 				&& temMesmaClassificacaoFinal(notificacao)
 				&& temMesmaEvolucaoCaso(notificacao) 
 				&& temMesmaDataInternacao(notificacao)
 				&& temMesmaDataEncerramento(notificacao);
-	}
-	
-	private boolean temMesmoCPF(Notificacao notificacao) {
-		  String cpf1 = this.getCpf();
-		  String cpf2 = notificacao.getCpf();
-		  
-		  if(cpf1 != null && cpf2 != null 
-		  && cpf1.equals(cpf2)) {
-			  return true;
-		  } 
-		  
-		  return false;
 	}
 	
 	private boolean temMesmoNomeCompleto(Notificacao notificacao) {

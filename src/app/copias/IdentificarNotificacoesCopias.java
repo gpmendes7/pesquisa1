@@ -92,10 +92,6 @@ public class IdentificarNotificacoesCopias {
 		fileWriter.close();
 	}
 
-	public static boolean naoEhNuloENemVazio(String string) {
-		return string != null && !string.equals("");
-	}
-
 	public static NotificacaoParaCSV gerarNotificacaoParaCSV(Notificacao notificacao) {
 		String dataNotificacao = notificacao.getDataNotificacao() != null ? notificacao.getDataNotificacao().toString()
 				: null;
