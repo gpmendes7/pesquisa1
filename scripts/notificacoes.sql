@@ -99,3 +99,23 @@ where n.paciente_id = 80000;
 select count(n.numeroNotificacao) 
 from notificacao n
 where n.paciente_id = 12223;
+
+-- total de notificações válidas com paciente repetido
+select count(n1.numeroNotificacao) as total
+from notificacao n1
+where not n1.descartada
+and exists (select *
+			   from notificacao n2
+               where n2.paciente_id = n1.paciente_id
+               and not n2.descartada
+               and n2.numeroNotificacao != n1.numeroNotificacao);
+               
+-- total de notificações válidas sem paciente repetido
+select count(n1.numeroNotificacao) as total
+from notificacao n1
+where not n1.descartada
+and not exists (select *
+			   from notificacao n2
+               where n2.paciente_id = n1.paciente_id
+               and not n2.descartada
+               and n2.numeroNotificacao != n1.numeroNotificacao);			

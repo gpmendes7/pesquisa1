@@ -25,15 +25,15 @@ public class IdentificarNotificacoesInconsistetesPorDatas {
 	private static FileWriter fileWriter9;
 	
 	public static void main(String[] args) throws IOException {
-		fileWriter1 = new FileWriter("./inconsistencias/individuais/inconsistenciaEntreDataNotificacaoEDataEncerramento.txt");
-		fileWriter2 = new FileWriter("./inconsistencias/individuais/inconsistenciaEntreDataNotificacaoEDataInicioSintomas.txt");
-		fileWriter3 = new FileWriter("./inconsistencias/individuais/inconsistenciaEntreDataNotificacaoEDataTeste.txt");
-		fileWriter4 = new FileWriter("./inconsistencias/individuais/inconsistenciaEntreDataNotificacaoEDataInternacao.txt");
-		fileWriter5 = new FileWriter("./inconsistencias/individuais/inconsistenciaEntreDataEncerramentoEDataInicioSintomas.txt");
-		fileWriter6 = new FileWriter("./inconsistencias/individuais/inconsistenciaEntreDataEncerramentoEDataTeste.txt");
-		fileWriter7 = new FileWriter("./inconsistencias/individuais/inconsistenciaEntreDataEncerramentoEDataInternacao.txt");
-		fileWriter8 = new FileWriter("./inconsistencias/individuais/inconsistenciaEntreDataInicioSintomasEDataTeste.txt");
-		fileWriter9 = new FileWriter("./inconsistencias/individuais/inconsistenciaEntreDataInicioSintomasEDataInternacao.txt");
+		fileWriter1 = new FileWriter("./arquivos/txt/inconsistencias/individuais/inconsistenciaEntreDataNotificacaoEDataEncerramento.txt");
+		fileWriter2 = new FileWriter("./arquivos/txt/inconsistencias/individuais/inconsistenciaEntreDataNotificacaoEDataInicioSintomas.txt");
+		fileWriter3 = new FileWriter("./arquivos/txt/inconsistencias/individuais/inconsistenciaEntreDataNotificacaoEDataTeste.txt");
+		fileWriter4 = new FileWriter("./arquivos/txt/inconsistencias/individuais/inconsistenciaEntreDataNotificacaoEDataInternacao.txt");
+		fileWriter5 = new FileWriter("./arquivos/txt/inconsistencias/individuais/inconsistenciaEntreDataEncerramentoEDataInicioSintomas.txt");
+		fileWriter6 = new FileWriter("./arquivos/txt/inconsistencias/individuais/inconsistenciaEntreDataEncerramentoEDataTeste.txt");
+		fileWriter7 = new FileWriter("./arquivos/txt/inconsistencias/individuais/inconsistenciaEntreDataEncerramentoEDataInternacao.txt");
+		fileWriter8 = new FileWriter("./arquivos/txt/inconsistencias/individuais/inconsistenciaEntreDataInicioSintomasEDataTeste.txt");
+		fileWriter9 = new FileWriter("./arquivos/txt/inconsistencias/individuais/inconsistenciaEntreDataInicioSintomasEDataInternacao.txt");
 		
 		EntityManagerFactory emf = Persistence.createEntityManagerFactory("sivep");
 		EntityManager em = emf.createEntityManager();

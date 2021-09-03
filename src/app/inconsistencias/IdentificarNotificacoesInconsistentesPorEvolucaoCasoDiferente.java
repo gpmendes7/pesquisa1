@@ -13,7 +13,7 @@ import javax.persistence.TypedQuery;
 
 import modelo.Notificacao;
 
-public class IndentificarNotificacoesInconsistentesPorEvolucaoCasoDiferente {
+public class IdentificarNotificacoesInconsistentesPorEvolucaoCasoDiferente {
 	
 	private static FileWriter fileWriter1;
 	private static FileWriter fileWriter2;
@@ -22,21 +22,21 @@ public class IndentificarNotificacoesInconsistentesPorEvolucaoCasoDiferente {
 	private static FileWriter fileWriter5;
 	
 	public static void main(String[] args) throws IOException {
-		fileWriter1 = new FileWriter("./inconsistencias/coletivas/inconsistenciaEmDataNotificacao.txt");
-		fileWriter2 = new FileWriter("./inconsistencias/coletivas/inconsistenciaEmDataEncerramento.txt");
-		fileWriter3 = new FileWriter("./inconsistencias/coletivas/inconsistenciaEmDataInicioSintomas.txt");
-		fileWriter4 = new FileWriter("./inconsistencias/coletivas/inconsistenciaEmDataTeste.txt");
-		fileWriter5 = new FileWriter("./inconsistencias/coletivas/inconsistenciaEmDataInternacao.txt");
+		fileWriter1 = new FileWriter("./arquivos/txt/inconsistencias/coletivas/inconsistenciaEmDataNotificacao.txt");
+		fileWriter2 = new FileWriter("./arquivos/txt/inconsistencias/coletivas/inconsistenciaEmDataEncerramento.txt");
+		fileWriter3 = new FileWriter("./arquivos/txt/inconsistencias/coletivas/inconsistenciaEmDataInicioSintomas.txt");
+		fileWriter4 = new FileWriter("./arquivos/txt/inconsistencias/coletivas/inconsistenciaEmDataTeste.txt");
+		fileWriter5 = new FileWriter("./arquivos/txt/inconsistencias/coletivas/inconsistenciaEmDataInternacao.txt");
 		
 		EntityManagerFactory emf = Persistence.createEntityManagerFactory("sivep");
 		EntityManager em = emf.createEntityManager();
 		
-		String jpql= "select n1" + 
-				     " from Notificacao n1" +
-				     " where n1.dataNascimento is not null"  + 
-				     " and exists (" +
-				     " select n2 from Notificacao n2" +
-				     " where n2.paciente = n1.paciente" +
+		String jpql= "select n1\n" + 
+				     " from Notificacao n1\n" +
+				     " where n1.dataNascimento is not null\n"  + 
+				     " and exists (\n" +
+				     " select n2 from Notificacao n2\n" +
+				     " where n2.paciente = n1.paciente\n" +
 				     " and n2.numeroNotificacao != n1.numeroNotificacao )";
 		
 		TypedQuery<Notificacao> query = em.createQuery(jpql, Notificacao.class);

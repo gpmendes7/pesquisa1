@@ -6,35 +6,50 @@ select * from paciente;
 select * from paciente
 where cpf = '63183358700';
 
--- pacientes com alguma duplicidade
-select *
+-- pacientes com alguma notificação
+select p.cpf
 from paciente p, 
      ( select n.paciente_id, count(n.numeroNotificacao) as qtd
 	   from notificacao n
 	   where n.paciente_id is not null
+       and not n.descartada
 	   group by n.paciente_id
 	 ) t
-where t.qtd > 1
+where t.qtd >= 1
 and t.paciente_id = p.id;
 
--- pacientes com alguma duplicidade
-select p.*
-from paciente p
-where exists ( select n.paciente_id, count(n.numeroNotificacao) as qtd
-				from notificacao n
-				where n.paciente_id is not null
-                and n.paciente_id = p.id
-                group by n.paciente_id
-				having qtd > 1
-            );
-
--- pacientes com mais de duas duplicidades
+-- pacientes com alguma notificação
 select p.cpf
 from paciente p
 where exists ( select n.paciente_id, count(n.numeroNotificacao) as qtd
 				from notificacao n
 				where n.paciente_id is not null
                 and n.paciente_id = p.id
+                and not n.descartada
                 group by n.paciente_id
-				having qtd > 2
+				having qtd >= 1
+            );
+
+-- pacientes com exatamente uma notificação
+select p.cpf
+from paciente p
+where exists ( select n.paciente_id, count(n.numeroNotificacao) as qtd
+				from notificacao n
+				where n.paciente_id is not null
+                and n.paciente_id = p.id
+                and not n.descartada
+                group by n.paciente_id
+				having qtd = 1
+            );
+		
+-- pacientes com pelo menos duas notificações
+select p.cpf
+from paciente p
+where exists ( select n.paciente_id, count(n.numeroNotificacao) as qtd
+				from notificacao n
+				where n.paciente_id is not null
+                and n.paciente_id = p.id
+                and not n.descartada
+                group by n.paciente_id
+				having qtd >= 2
             );
