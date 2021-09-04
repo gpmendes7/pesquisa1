@@ -160,7 +160,7 @@ public class IdentificarInconsistenciasColetivas {
 		  if(dataNotificacao1 != null && dataNotificacao2 != null
 		     && ((dataNotificacao1).before(dataNotificacao2))) {
 			  fileWriter1.write("***************************\n");
-			  fileWriter1.write("Notificações com evolução caso diferentes e com data de notificação incosistentes entre si\n");
+			  fileWriter1.write("Notificações com evolução caso diferentes e com data de notificação inconsistentes entre si\n");
 			  fileWriter1.write(notificacao + "\n");
 			  fileWriter1.write(notificacaoDuplicada + "\n");
 			  fileWriter1.write("***************************\n");
@@ -181,7 +181,7 @@ public class IdentificarInconsistenciasColetivas {
 		  if(dataEncerramento1 != null && dataEncerramento2 != null
 		     && ((dataEncerramento1).before(dataEncerramento2))) {
 				  fileWriter2.write("***************************\n");
-				  fileWriter2.write("Notificações com evolução caso diferentes e com data de encerramento incosistentes entre si\n");
+				  fileWriter2.write("Notificações com evolução caso diferentes e com data de encerramento inconsistentes entre si\n");
 				  fileWriter2.write(notificacao + "\n");
 				  fileWriter2.write(notificacaoDuplicada + "\n");
 				  fileWriter2.write("***************************\n");
@@ -202,7 +202,7 @@ public class IdentificarInconsistenciasColetivas {
 		  if(dataInicioSintomas1 != null && dataInicioSintomas2 != null
 		     && ((dataInicioSintomas1).before(dataInicioSintomas2))) {
 			  fileWriter3.write("***************************\n");
-			  fileWriter3.write("Notificações com evolução caso diferentes e com data de início sintomas incosistentes entre si\n");
+			  fileWriter3.write("Notificações com evolução caso diferentes e com data de início sintomas inconsistentes entre si\n");
 			  fileWriter3.write(notificacao + "\n");
 			  fileWriter3.write(notificacaoDuplicada + "\n");
 			  fileWriter3.write("***************************\n");
@@ -223,7 +223,7 @@ public class IdentificarInconsistenciasColetivas {
 		  if(dataTeste1 != null && dataTeste2 != null
 		     && ((dataTeste1).before(dataTeste2))) {
 			  fileWriter4.write("***************************\n");
-			  fileWriter4.write("Notificações com evolução caso diferentes e com data de teste incosistentes entre si\n");
+			  fileWriter4.write("Notificações com evolução caso diferentes e com data de teste inconsistentes entre si\n");
 			  fileWriter4.write(notificacao + "\n");
 			  fileWriter4.write(notificacaoDuplicada + "\n");
 			  fileWriter4.write("***************************\n");
@@ -244,7 +244,7 @@ public class IdentificarInconsistenciasColetivas {
 		  if(dataInternacao1 != null && dataInternacao2 != null
 		     && ((dataInternacao1).before(dataInternacao2))) {
 			  fileWriter5.write("***************************\n");
-			  fileWriter5.write("Notificações com evolução caso diferentes e com data de internação incosistentes entre si\n");
+			  fileWriter5.write("Notificações com evolução caso diferentes e com data de internação inconsistentes entre si\n");
 			  fileWriter5.write(notificacao + "\n");
 			  fileWriter5.write(notificacaoDuplicada + "\n");
 			  fileWriter5.write("***************************\n");
