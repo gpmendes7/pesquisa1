@@ -57,7 +57,11 @@ where exists ( select n.paciente_id, count(n.numeroNotificacao) as qtd
 -- total de pacientes sem cpf
 select count(p.id)
 from paciente p
-where p.cpf = '';
+where p.cpf is null or cpf = '';
+
+select count(p.id)
+from paciente p
+where cpf is not null and cpf != '';
 
 -- total de pacientes sem nomeCompleto
 select count(p.id)
