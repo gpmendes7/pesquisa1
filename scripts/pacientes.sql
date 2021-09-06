@@ -53,3 +53,19 @@ where exists ( select n.paciente_id, count(n.numeroNotificacao) as qtd
                 group by n.paciente_id
 				having qtd >= 2
             );
+
+-- total de pacientes sem cpf
+select count(p.id)
+from paciente p
+where p.cpf = '';
+
+-- total de pacientes sem nomeCompleto
+select count(p.id)
+from paciente p
+where p.nomeCompleto = '';
+
+-- total de pacientes sem nomeCompleto
+select count(p.id)
+from paciente p
+where p.cpf = ''
+and p.nomeCompleto = '';
