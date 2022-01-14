@@ -14,9 +14,9 @@ import javax.persistence.TypedQuery;
 import com.opencsv.exceptions.CsvDataTypeMismatchException;
 import com.opencsv.exceptions.CsvRequiredFieldEmptyException;
 
-import csv.CSVNotificacao;
+import csv.NotificacaoCSV;
+import csv.NotificacaoCSVHandler;
 import modelo.Notificacao;
-import modelo.NotificacaoParaCSV;
 
 public class IdentificarNotificacoesCopias {
 
@@ -38,7 +38,7 @@ public class IdentificarNotificacoesCopias {
 
 		List<Notificacao> notificacoes = query.getResultList();
 
-		List<NotificacaoParaCSV> notificacoesCSV = new ArrayList<NotificacaoParaCSV>();
+		List<NotificacaoCSV> notificacoesCSV = new ArrayList<NotificacaoCSV>();
 
 		int totalDeNotificacoesComCopias = 0;
 		int totalCopias = 0;
@@ -74,7 +74,7 @@ public class IdentificarNotificacoesCopias {
 		System.out.println("Total de cópias identificadas: " + totalCopias);
 
 		notificacoesCSV.add(0,
-				new NotificacaoParaCSV("numeroNotificacao", "nomeCompleto", "cpf", "dataNotificacao",
+				new NotificacaoCSV("numeroNotificacao", "nomeCompleto", "cpf", "dataNotificacao",
 						"dataInicioSintomas", "dataNascimento", "cep", "logradouro", "numero", "complemento", "bairro",
 						"municipio", "estado", "estrangeiro", "passaporte", "paisOrigem", "profissionalSeguranca",
 						"profissionalSaude", "cbo", "cns", "nomeMae", "sexo", "racaCor", "telefoneCelular",
@@ -84,7 +84,7 @@ public class IdentificarNotificacoesCopias {
 						"longitude", "cnes", "idade", "estadoTeste", "dataTeste", "tipoTeste", "resultadoTeste",
 						"dataInternacao", "dataEncerramento", "evolucaoCaso", "classificacaoFinal", "descartada"));
 
-		CSVNotificacao.criarCSV(ARQUIVO_CSV_COPIAS, notificacoesCSV);
+		NotificacaoCSVHandler.criarCSV(ARQUIVO_CSV_COPIAS, notificacoesCSV);
 
 		em.close();
 		emf.close();
@@ -92,7 +92,7 @@ public class IdentificarNotificacoesCopias {
 		fileWriter.close();
 	}
 
-	public static NotificacaoParaCSV gerarNotificacaoParaCSV(Notificacao notificacao) {
+	public static NotificacaoCSV gerarNotificacaoParaCSV(Notificacao notificacao) {
 		String dataNotificacao = notificacao.getDataNotificacao() != null ? notificacao.getDataNotificacao().toString()
 				: null;
 		String dataInicioSintomas = notificacao.getDataInicioSintomas() != null
@@ -107,7 +107,7 @@ public class IdentificarNotificacoesCopias {
 				? notificacao.getDataEncerramento().toString()
 				: null;
 
-		return new NotificacaoParaCSV(notificacao.getNumeroNotificacao(), notificacao.getNomeCompleto(),
+		return new NotificacaoCSV(notificacao.getNumeroNotificacao(), notificacao.getNomeCompleto(),
 				notificacao.getCpf(), dataNotificacao, dataInicioSintomas, dataNascimento, notificacao.getCep(),
 				notificacao.getLogradouro(), notificacao.getNumero(), notificacao.getComplemento(),
 				notificacao.getBairro(), notificacao.getMunicipio(), notificacao.getEstado(),

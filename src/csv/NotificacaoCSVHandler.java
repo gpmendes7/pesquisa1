@@ -1,5 +1,6 @@
 package csv;
 
+
 import java.io.IOException;
 import java.io.Reader;
 import java.io.Writer;
@@ -16,16 +17,14 @@ import com.opencsv.bean.StatefulBeanToCsvBuilder;
 import com.opencsv.exceptions.CsvDataTypeMismatchException;
 import com.opencsv.exceptions.CsvRequiredFieldEmptyException;
 
-import modelo.Sivep;
-
-public class CSVSivep {
-
-	private static ColumnPositionMappingStrategy<Sivep> strategy;
-
+public class NotificacaoCSVHandler {
+	
+	private static ColumnPositionMappingStrategy<NotificacaoCSV> strategy;
+	
 	static {
-		strategy = new ColumnPositionMappingStrategy<modelo.Sivep>();
-		strategy.setType(modelo.Sivep.class);
-
+		strategy = new ColumnPositionMappingStrategy<NotificacaoCSV>();
+		strategy.setType(NotificacaoCSV.class);
+		
 		String[] colunas = { "numeroNotificacao", "nomeCompleto", "cpf", "dataNotificacao", "dataInicioSintomas",
 				"dataNascimento", "cep", "logradouro", "numero", "complemento", "bairro", "municipio", "estado",
 				"estrangeiro", "passaporte", "paisOrigem", "profissionalSeguranca", "profissionalSaude", "cbo", "cns",
@@ -33,28 +32,33 @@ public class CSVSivep {
 				"dispneia", "outrosSintomas", "descricaoOutros", "doencasRespiratorias", "doencasRenais",
 				"fragilidadeImunologica", "diabetes", "imunosupressao", "doencasCardiacas", "gestanteAltoRisco",
 				"origem", "latitude", "longitude", "cnes", "idade", "estadoTeste", "dataTeste", "tipoTeste",
-				"resultadoTeste", "dataInternacao", "dataEncerramento", "evolucaoCaso", "classificacaoFinal" };
-
+				"resultadoTeste", "dataInternacao", "dataEncerramento", "evolucaoCaso", "classificacaoFinal", "descartada" };
+		
 		strategy.setColumnMapping(colunas);
 	}
 
-	public static List<Sivep> carregarCSV(String nomeArquivo) throws IOException {
+	public static List<NotificacaoCSV> carregarCSV(String nomeArquivo) throws IOException {
 		try (Reader reader = Files.newBufferedReader(Paths.get(nomeArquivo));) {
-			CsvToBean<Sivep> csvToBean = new CsvToBeanBuilder<Sivep>(reader).withMappingStrategy(strategy)
-					.withType(Sivep.class).withSeparator(';').withSkipLines(1).build();
-			List<Sivep> siveps = csvToBean.parse();
-			return siveps;
+			CsvToBean<NotificacaoCSV> csvToBean = new CsvToBeanBuilder<NotificacaoCSV>(reader)
+					.withMappingStrategy(strategy)
+					.withType(NotificacaoCSV.class)
+					.withSeparator(';')
+					.withSkipLines(1)
+					.build();
+			List<NotificacaoCSV> notificacoes = csvToBean.parse();
+			return notificacoes;
 		}
 	}
 
-	public static void criarCSV(String nomeArquivo, List<Sivep> siveps)
-			throws IOException, CsvDataTypeMismatchException, CsvRequiredFieldEmptyException {
+	public static void criarCSV(String nomeArquivo, List<NotificacaoCSV> notificacoes) throws IOException, CsvDataTypeMismatchException, CsvRequiredFieldEmptyException {
 		try (Writer writer = Files.newBufferedWriter(Paths.get(nomeArquivo));) {
-			StatefulBeanToCsv<Sivep> beanToCsv = new StatefulBeanToCsvBuilder<Sivep>(writer)
-					.withMappingStrategy(strategy).withSeparator(';').withQuotechar(CSVWriter.NO_QUOTE_CHARACTER)
+			StatefulBeanToCsv<NotificacaoCSV> beanToCsv = new StatefulBeanToCsvBuilder<NotificacaoCSV>(writer)
+					.withMappingStrategy(strategy)
+					.withSeparator(';')
+					.withQuotechar(CSVWriter.NO_QUOTE_CHARACTER)
 					.build();
 
-			beanToCsv.write(siveps);
+			beanToCsv.write(notificacoes);
 		}
 	}
 

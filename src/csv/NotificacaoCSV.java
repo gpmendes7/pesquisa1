@@ -1,6 +1,6 @@
-package modelo;
+package csv;
 
-public class NotificacaoParaCSV {
+public class NotificacaoCSV {
 	
 	private String numeroNotificacao;
 	private String nomeCompleto;
@@ -55,11 +55,11 @@ public class NotificacaoParaCSV {
 	private String classificacaoFinal;	
 	private String descartada;
 	
-	public NotificacaoParaCSV() {
+	public NotificacaoCSV() {
 		
 	}
 
-	public NotificacaoParaCSV(String numeroNotificacao, String nomeCompleto, String cpf, String dataNotificacao,
+	public NotificacaoCSV(String numeroNotificacao, String nomeCompleto, String cpf, String dataNotificacao,
 			String dataInicioSintomas, String dataNascimento, String cep, String logradouro, String numero,
 			String complemento, String bairro, String municipio, String estado, String estrangeiro, String passaporte,
 			String paisOrigem, String profissionalSeguranca, String profissionalSaude, String cbo, String cns,

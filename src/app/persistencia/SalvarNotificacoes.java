@@ -13,9 +13,9 @@ import javax.persistence.Persistence;
 import com.opencsv.exceptions.CsvDataTypeMismatchException;
 import com.opencsv.exceptions.CsvRequiredFieldEmptyException;
 
-import csv.CSVSivep;
+import csv.SivepCSV;
+import csv.SivepCSVHandler;
 import modelo.Notificacao;
-import modelo.Sivep;
 
 public class SalvarNotificacoes {
 
@@ -24,15 +24,15 @@ public class SalvarNotificacoes {
 	public static void main(String[] args)
 			throws IOException, CsvDataTypeMismatchException, CsvRequiredFieldEmptyException, ParseException {
 
-		EntityManagerFactory emf = Persistence.createEntityManagerFactory("sivep");
+		EntityManagerFactory emf = Persistence.createEntityManagerFactory("pesquisa1");
 		EntityManager em = emf.createEntityManager();
 
-		List<Sivep> siveps = CSVSivep.carregarCSV(ARQUIVO_CSV_SIVEP);
+		List<SivepCSV> siveps = SivepCSVHandler.carregarCSV(ARQUIVO_CSV_SIVEP);
 		System.out.println("Total de registros carregados: " + siveps.size());
 
 		em.getTransaction().begin();
 		
-		for (Sivep sivep : siveps) {
+		for (SivepCSV sivep : siveps) {
 			em.persist(gerarNotificacao(sivep));
 		}
 		
@@ -46,7 +46,7 @@ public class SalvarNotificacoes {
 		return string != null && !string.equals("");
 	}
 
-	public static Notificacao gerarNotificacao(Sivep sivep) throws ParseException {
+	public static Notificacao gerarNotificacao(SivepCSV sivep) throws ParseException {
 		sivep.formatarCampos();
 		
 		SimpleDateFormat sdf1 = new SimpleDateFormat("dd/MM/yyyy");

@@ -17,7 +17,7 @@ import modelo.Paciente;
 public class SalvarPacientes {
 
 	public static void main(String[] args) {
-		EntityManagerFactory emf = Persistence.createEntityManagerFactory("sivep");
+		EntityManagerFactory emf = Persistence.createEntityManagerFactory("pesquisa1");
 		EntityManager em = emf.createEntityManager();
 
 		String jpql = "select n from Notificacao n where descartada = 0";

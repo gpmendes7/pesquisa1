@@ -15,9 +15,9 @@ import javax.persistence.TypedQuery;
 import com.opencsv.exceptions.CsvDataTypeMismatchException;
 import com.opencsv.exceptions.CsvRequiredFieldEmptyException;
 
-import csv.CSVNotificacao;
+import csv.NotificacaoCSV;
+import csv.NotificacaoCSVHandler;
 import modelo.Notificacao;
-import modelo.NotificacaoParaCSV;
 
 public class IdentificarInconsistenciasColetivas {
 	
@@ -39,11 +39,11 @@ public class IdentificarInconsistenciasColetivas {
 	private static final String ARQUIVO_CSV_INCONSISTENCIA4 = "./arquivos/csv/inconsistencias/coletivas/inconsistenciaEmDataTeste.csv";
 	private static final String ARQUIVO_CSV_INCONSISTENCIA5 = "./arquivos/csv/inconsistencias/coletivas/inconsistenciaEmDataInternacao.csv";
 	
-	private static List<NotificacaoParaCSV> notificacoesCSV1;
-	private static List<NotificacaoParaCSV> notificacoesCSV2;
-	private static List<NotificacaoParaCSV> notificacoesCSV3;
-	private static List<NotificacaoParaCSV> notificacoesCSV4;
-	private static List<NotificacaoParaCSV> notificacoesCSV5;
+	private static List<NotificacaoCSV> notificacoesCSV1;
+	private static List<NotificacaoCSV> notificacoesCSV2;
+	private static List<NotificacaoCSV> notificacoesCSV3;
+	private static List<NotificacaoCSV> notificacoesCSV4;
+	private static List<NotificacaoCSV> notificacoesCSV5;
 	
 	
 
@@ -54,11 +54,11 @@ public class IdentificarInconsistenciasColetivas {
 		fileWriter4 = new FileWriter(ARQUIVO_TEXTO_INCONSISTENCIA4);
 		fileWriter5 = new FileWriter(ARQUIVO_TEXTO_INCONSISTENCIA5);
 		
-		notificacoesCSV1 = new ArrayList<NotificacaoParaCSV>();
-		notificacoesCSV2 = new ArrayList<NotificacaoParaCSV>();
-		notificacoesCSV3 = new ArrayList<NotificacaoParaCSV>();
-		notificacoesCSV4 = new ArrayList<NotificacaoParaCSV>();
-		notificacoesCSV5 = new ArrayList<NotificacaoParaCSV>();
+		notificacoesCSV1 = new ArrayList<NotificacaoCSV>();
+		notificacoesCSV2 = new ArrayList<NotificacaoCSV>();
+		notificacoesCSV3 = new ArrayList<NotificacaoCSV>();
+		notificacoesCSV4 = new ArrayList<NotificacaoCSV>();
+		notificacoesCSV5 = new ArrayList<NotificacaoCSV>();
 		
 		EntityManagerFactory emf = Persistence.createEntityManagerFactory("sivep");
 		EntityManager em = emf.createEntityManager();
@@ -119,10 +119,10 @@ public class IdentificarInconsistenciasColetivas {
 		fileWriter5.close();
 	}
 
-	private static void gerarArquivoCSV(String nomeArquivo, List<NotificacaoParaCSV> notificacoesCSV)
+	private static void gerarArquivoCSV(String nomeArquivo, List<NotificacaoCSV> notificacoesCSV)
 			throws IOException, CsvDataTypeMismatchException, CsvRequiredFieldEmptyException {
 		notificacoesCSV.add(0,
-				new NotificacaoParaCSV("numeroNotificacao", "nomeCompleto", "cpf", "dataNotificacao",
+				new NotificacaoCSV("numeroNotificacao", "nomeCompleto", "cpf", "dataNotificacao",
 						"dataInicioSintomas", "dataNascimento", "cep", "logradouro", "numero", "complemento", "bairro",
 						"municipio", "estado", "estrangeiro", "passaporte", "paisOrigem", "profissionalSeguranca",
 						"profissionalSaude", "cbo", "cns", "nomeMae", "sexo", "racaCor", "telefoneCelular",
@@ -132,7 +132,7 @@ public class IdentificarInconsistenciasColetivas {
 						"longitude", "cnes", "idade", "estadoTeste", "dataTeste", "tipoTeste", "resultadoTeste",
 						"dataInternacao", "dataEncerramento", "evolucaoCaso", "classificacaoFinal", "descartada"));
 
-		CSVNotificacao.criarCSV(nomeArquivo, notificacoesCSV);
+		NotificacaoCSVHandler.criarCSV(nomeArquivo, notificacoesCSV);
 	}
 
 	private static boolean temInconsistencia(Notificacao notificacao, Notificacao notificacaoDuplicada) throws IOException {
@@ -258,7 +258,7 @@ public class IdentificarInconsistenciasColetivas {
 		  return false;
 	}
 	
-	public static NotificacaoParaCSV gerarNotificacaoParaCSV(Notificacao notificacao) {
+	public static NotificacaoCSV gerarNotificacaoParaCSV(Notificacao notificacao) {
 		String dataNotificacao = notificacao.getDataNotificacao() != null ? notificacao.getDataNotificacao().toString()
 				: null;
 		String dataInicioSintomas = notificacao.getDataInicioSintomas() != null
@@ -273,7 +273,7 @@ public class IdentificarInconsistenciasColetivas {
 				? notificacao.getDataEncerramento().toString()
 				: null;
 
-		return new NotificacaoParaCSV(notificacao.getNumeroNotificacao(), notificacao.getNomeCompleto(),
+		return new NotificacaoCSV(notificacao.getNumeroNotificacao(), notificacao.getNomeCompleto(),
 				notificacao.getCpf(), dataNotificacao, dataInicioSintomas, dataNascimento, notificacao.getCep(),
 				notificacao.getLogradouro(), notificacao.getNumero(), notificacao.getComplemento(),
 				notificacao.getBairro(), notificacao.getMunicipio(), notificacao.getEstado(),

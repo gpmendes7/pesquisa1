@@ -1,6 +1,6 @@
-package modelo;
+package csv;
 
-public class Sivep {
+public class SivepCSV {
 
 	private String numeroNotificacao;
 	private String nomeCompleto;
@@ -54,7 +54,7 @@ public class Sivep {
 	private String evolucaoCaso;
 	private String classificacaoFinal;
 
-	public Sivep() {
+	public SivepCSV() {
 	}
 
 	public void formatarCampos() {
@@ -63,7 +63,7 @@ public class Sivep {
 		this.descricaoOutros = this.descricaoOutros.replace(";", ",");
 	}
 	
-	public Sivep(String numeroNotificacao, String nomeCompleto, String cpf, String dataNotificacao,
+	public SivepCSV(String numeroNotificacao, String nomeCompleto, String cpf, String dataNotificacao,
 			String dataInicioSintomas, String dataNascimento, String cep, String logradouro, String numero,
 			String complemento, String bairro, String municipio, String estado, String estrangeiro, String passaporte,
 			String paisOrigem, String profissionalSeguranca, String profissionalSaude, String cbo, String cns,
