@@ -74,7 +74,6 @@ public class SivepCSV {
 			String longitude, String cnes, String idade, String estadoTeste, String dataTeste, String tipoTeste,
 			String resultadoTeste, String dataInternacao, String dataEncerramento, String evolucaoCaso,
 			String classificacaoFinal) {
-		super();
 		this.numeroNotificacao = numeroNotificacao;
 		this.nomeCompleto = nomeCompleto;
 		this.cpf = cpf;
